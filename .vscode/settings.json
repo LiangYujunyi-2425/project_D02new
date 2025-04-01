@@ -1,0 +1,5 @@
+{
+    "[jinja-html]": {
+        "editor.defaultFormatter": "monosans.djlint"
+    }
+}

@@ -15,6 +15,33 @@ followers = db.Table(
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
 
+class 電競(db.Model):
+    電競 = db.Column(db.String(64), primary_key=True)
+    機迷事區 = db.Column(db.String(120))
+    網燈遊戲延遲值評察 = db.Column(db.Integer)
+    雙連按寬頻 = db.Column(db.String(64))
+    電競乾淨數區 = db.Column(db.String(120))
+
+    def __repr__(self) -> str:
+        return f'<電競 {self.電競}>'
+
+class 外遊(db.Model):
+    外遊 = db.Column(db.String(64), primary_key=True)
+    旅遊數據卡 = db.Column(db.String(120))
+    實騁WIFI蛋 = db.Column(db.String(120))
+    通話功能 = db.Column(db.String(120))
+    品牌 = db.Column(db.String(64))
+
+    def __repr__(self) -> str:
+        return f'<外遊 {self.外遊}>'
+
+class 手機及智能產品(db.Model):
+    手機及智能產品 = db.Column(db.String(64), primary_key=True)
+    Apple產品 = db.Column(db.String(120))
+    Samsung產品 = db.Column(db.String(120))
+
+    def __repr__(self) -> str:
+        return f'<手機及智能產品 {self.手機及智能產品}>'
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)

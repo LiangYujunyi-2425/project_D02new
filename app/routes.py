@@ -189,3 +189,8 @@ def unfollow(username):
     db.session.commit()
     flash(_('You are not following %(username)s.', username=username))
     return redirect(url_for('user', username=username))
+
+@app.route('/partnership_benefits', methods=['GET', 'POST'])
+@login_required
+def partnership_benefits():
+        return render_template('partnership_benefits.html.j2',title=_('partnership_benefits'))

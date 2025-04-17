@@ -194,3 +194,8 @@ def unfollow(username):
 @login_required
 def partnership_benefits():
         return render_template('partnership_benefits.html.j2',title=_('partnership_benefits'))
+
+@app.route('/partnership_benefits', methods=['GET', 'POST'])
+@login_required
+def partnership_benefits():
+        return render_template('hkbn.html.j2',title=_('家居宽频'))

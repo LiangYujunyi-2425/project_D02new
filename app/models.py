@@ -102,3 +102,14 @@ class Health_care(db.Model):  #table:醫療保健#
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(50))
 
+class 1(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(50))
+
+class 2(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(50))
+
+class 3(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(50))

@@ -90,3 +90,29 @@ class Post(db.Model):
 
     def __repr__(self) -> str:
         return f'<Post {self.body}>'
+    
+
+class Insurance(db.Model):#保險#
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    
+
+    def __repr__(self) -> str:
+        return f'<Insurance {self.GInsurance}>'
+
+class network(db.Model):#網絡安全#
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    media = db.Column(db.String(120))
+    
+
+    def __repr__(self) -> str:
+        return f'<network {self.network}>'
+
+class entertainment(db.Model):#娛樂#
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    
+
+    def __repr__(self) -> str:
+        return f'<entertainment {self.entertainment}>'

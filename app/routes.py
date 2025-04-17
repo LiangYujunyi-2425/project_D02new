@@ -40,6 +40,9 @@ def index():
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
+@app.route('/text_index')
+def text_index():
+    return render_template('text_index.html.j2', title=_('text_index'))
 
 @app.route('/explore')
 @login_required

@@ -1,0 +1,44 @@
+{% extends "base.html.j2" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
+    <!-- 主要展示區 -->
+    <section class="hero-section">
+        <h2>高速寬頻服務</h2>
+        <p>為您提供最優質的網絡體驗</p>
+            <button class="cta-button">立即申請</button>
+        </a>
+    </section>
+    <!-- 查詢 -->
+    <section class="contact-form">
+        <h2>立即查詢覆蓋</h2>
+        <form>
+            <div class="form-group">
+                <label for="name">新登記客戶請輸入地址，以查詢網絡覆蓋及月費計劃</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">提交</button>
+        </form>
+    </section>
+    <!-- 產品展示 -->
+    <section class="product-cards">
+        <div class="card">
+            <h1>25Gbps光纖寬頻</h1>
+            <h4>新時代新速度</h4>
+            <p>全港首個25Gbps光纖寬頻服務,利用最新的25G PON技術,為用戶提供比1000M寬頻快25倍的極速體驗。最快網速以配合新一代裝置面世及迎接AI盛世的強勁頻寬需求。瞬間為你下載超大型雲端檔案及3A遊戲。</p>
+            <button class="btn btn-info">了解更多</button>
+        </div>
+        <div class="card">
+            
+            <h1>5Gbps/10Gbps 光纖寬頻</h1>
+            <h4>高頻寬用家 理想選擇</h4>
+            <p>使用XGS-PON光纖技術,配合最新Wi-Fi 7 及 10Gbps接口,滿足你對超高速光纖寬頻的需求,輕鬆應付專業用家、下載電影/直播(4K/8K)、電競遊戲、AR/VR應用等的龐大需要,時刻享受極速超流暢網絡</p>
+            <button class="btn btn-info">了解更多</button>
+        </div>
+        <div class="card">
+            <h1>2.5Gbps 光纖寬頻</h1>
+            <h4>滿足全家網絡需要</h4>
+            <p>無論是娛樂或工作學習,仍能保持流暢穩定,不再擔心同步使用而減慢,全家同時享受極速網絡。配合2.5Gbps接口的Wi-Fi 7 路由器，全面發揮你的手機、平板、手提電腦的最強網絡效能。</p>
+            <button class="btn btn-info">了解更多</button>
+        </div>>
+    </section>    
+{% endblock %}

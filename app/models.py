@@ -127,3 +127,28 @@ class entertainment(db.Model):#娛樂#
 
     def __repr__(self) -> str:
         return f'<entertainment {self.entertainment}>'
+#jackwkw#
+class Gaming(db.Model):#電競#
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    price = db.Column(db.String(120))
+
+    def __repr__(self) -> str:
+        return f'<Gaming {self.Gaming}>'
+
+class travel(db.Model):#外遊#
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    price = db.Column(db.String(120))
+
+    def __repr__(self) -> str:
+        return f'<travel {self.travel}>'
+
+class protucts(db.Model):#server#
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    price = db.Column(db.String(120))
+    store = db.Column(db.String(120))
+
+    def __repr__(self) -> str:
+        return f'<protucts {self.protucts}>'

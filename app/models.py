@@ -90,3 +90,26 @@ class Post(db.Model):
 
     def __repr__(self) -> str:
         return f'<Post {self.body}>'
+
+class Mobile_c(db.Model):  #table:流動通訊#
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(50))
+
+class Voice_c(db.Model):   #table:語音電話#
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(50))
+class Health_care(db.Model):  #table:醫療保健#
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(50))
+
+class 1(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(50))
+
+class 2(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(50))
+
+class 3(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(50))

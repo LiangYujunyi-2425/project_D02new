@@ -22,7 +22,7 @@ cycler==0.11.0
 debugpy==1.6.4
 decorator==5.1.1
 defusedxml==0.7.1
-djlint==1.19.7
+djlint==1.36.4
 dnspython==2.2.1
 dominate==2.7.0
 EditorConfig==0.12.3
@@ -57,7 +57,7 @@ jedi==0.18.2
 Jinja2==3.1.2
 joblib==1.2.0
 jsbeautifier==1.14.7
-json5==0.9.10
+json5==0.12.0
 jsonpointer==2.3
 jsonschema==4.17.3
 jupyter-events==0.5.0
@@ -93,7 +93,7 @@ packaging==22.0
 pandas==1.5.2
 pandocfilters==1.5.0
 parso==0.8.3
-pathspec==0.10.3
+pathspec==0.12.1
 pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==9.3.0
@@ -115,7 +115,7 @@ python-json-logger==2.0.4
 pytz==2022.6
 PyYAML==6.0
 pyzmq==24.0.1
-regex==2022.10.31
+regex==2024.11.6
 requests==2.28.1
 rfc3339-validator==0.1.4
 rfc3986-validator==0.1.1

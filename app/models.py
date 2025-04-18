@@ -127,3 +127,46 @@ class entertainment(db.Model):#娛樂#
 
     def __repr__(self) -> str:
         return f'<entertainment {self.entertainment}>'
+#jackwkw#
+class Gaming(db.Model):#電競#
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    price = db.Column(db.String(120))
+
+    def __repr__(self) -> str:
+        return f'<Gaming {self.Gaming}>'
+
+class travel(db.Model):#外遊#
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    price = db.Column(db.String(120))
+
+    def __repr__(self) -> str:
+        return f'<travel {self.travel}>'
+
+class protucts(db.Model):#server#
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    price = db.Column(db.String(120))
+    store = db.Column(db.String(120))
+
+    def __repr__(self) -> str:
+        return f'<protucts {self.protucts}>'
+    
+class login2(db.Model):
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    username = db.Column(db.String(64), index=True, unique=True)
+    password_hash = db.Column(db.String(128))
+
+class sporrt(db.Model):
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    phone_number = db.Column(db.String(15))
+
+class Courtesy(db.Model):
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    Courtesy_name = db.Column(db.String(120))
+    start_date = db.Column(db.DateTime)  # 使用标准时间类型
+    End_date = db.Column(db.DateTime)

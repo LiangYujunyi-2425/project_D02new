@@ -1,14 +1,64 @@
 {% extends "base.html.j2" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 {% block app_content %}
-    <h1>{{ _('Hi, %(username)s!', username=current_user.username) }}</h1>
-    {% if form %}
-        {{ wtf.quick_form(form) }}
-        <br/>
-    {% endif %}
-    {% for post in posts %}
-        {% include "_post.html.j2" %}
-    {% endfor %}
+    <div >
+       <img style="width:1400px ; height:400px" src="https://aio-static.hkbn.net/content/queryScenePlanSelectionContents/3x4yPlnD7l48NZu0GYXMRUsgKucAupMsaCohhWquE4.jpg?format=auto&quot">
+       <style>
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .tab.active {
+            border-bottom: 2px solid rgb(255, 179, 0);
+            color: rgb(255, 179, 0);
+        }
+        .content {
+            display: none;
+        }
+        .content.active {
+            display: block;
+        }
+    </style>
+
+    <div class="tab-container">
+        <div class="tab active" onclick="switchTab(0)">流動通訊</div>
+        <div class="tab" onclick="switchTab(1)">家居寬頻</div>
+        <div class="tab" onclick="switchTab(2)">OTT 娛樂</div>
+        <div class="tab" onclick="switchTab(3)">全面保障</div>
+        <div class="tab" onclick="switchTab(4)">外遊數據及保險</div>
+        <div class="tab" onclick="switchTab(5)">Shoppy寬樂買</div>
+    </div>
+
+    <div class="content active">流動通訊內容</div>
+    <div class="content">家居寬頻內容</div>
+    <div class="content">OTT 娛樂內容</div>
+    <div class="content">全面保障內容</div>
+    <div class="content">
+    <img src =https://aio-static.hkbn.net/content/queryScenePlanSelectionContents/3x4yPlnD7l48NZu0GYXMRUsgKucAupMsaCohhWquE4.jpg?format=auto&quot>
+    </div>
+
+    <script>
+        function switchTab(index) {
+            // 移除所有tab和content的active類
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // 添加active類到選中的tab和content
+            tabs[index].classList.add('active');
+            contents[index].classList.add('active');
+        }
+    </script>
+   </div>
+
+
     <nav aria-label="...">
         <ul class="pager">
             <li class="previous{% if not prev_url %} disabled{% endif %}">

@@ -194,3 +194,8 @@ def unfollow(username):
 @login_required
 def partnership_benefits():
         return render_template('partnership_benefits.html.j2',title=_('partnership_benefits'))
+
+@app.route('/禮遇及支援', methods=['GET', 'POST'])
+@login_required
+def benefits_and_support():
+        return render_template('benefits_and_support.html.j2', title=_('benefits_and_support'))

@@ -7,6 +7,20 @@
     {% endif %}
 {% endblock %}
 {% block navbar %}
+    <style>
+        .logo{
+            position: relative;
+            bottom:20px ;
+        }
+        .aaa{
+            display:none;
+        }
+        .table_stretch:hover .aaa{
+            display:block;
+            background-color:orange;
+            color:white
+        }
+    </style>
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -20,21 +34,35 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('index') }}">Microblog</a>
+                <a class="navbar-brand" href="{{ url_for('index') }}"><img class="logo" src="https://www.hkbn.net/personal/dist/img/node_modules/all-in-one-web-header-footer/dist/img/navbar/logo363307a4d76e2893cda8d4af5b06724e.svg" alt="Girl in a jacket" width="60" height="60"></a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="{{ url_for('index') }}">{{ _('Home') }}</a>
+                        <a href="{{ url_for('index') }}">{{ _('首頁') }}</a>
                     </li>
                     <li>
-                        <a href="{{ url_for('explore') }}">{{ _('Explore') }}</a>
+                        <a href="{{ url_for('explore') }}">{{ _('至筍推介') }}</a>
                     </li>
                     <li>
-                        <a href="{{ url_for('partnership_benefits') }}">{{ _('Partnership_benefits') }}</a>
+                        <a href="{{ url_for('partnership_benefits') }}">{{ _('新居入伙優惠') }}</a>
                     </li>
-                    <li>
-                        <a href="{{ url_for('services') }}">{{ _('services') }}</a>
+                    <li class="table_stretch">
+                        <a href="{{ url_for('services') }}">{{ _('服務方案') }}</a>
+                        <ul class="aaa">
+                            <li>家居寬頻</li>
+                            <li>Wi-Fi 6/7</li>
+                            <li>智能家居</li>
+                            <li>流動通訊</li>
+                            <li>語音電話</li>
+                            <li>醫療保健</li>
+                            <li>保險</li>
+                            <li>網絡安全</li>
+                            <li>娛樂</li>
+                            <li>電競</li>
+                            <li>外遊</li>
+                            <li>手機及智能產品</li>
+                        </ul>
                     </li>
                     <li>
                         <a href="{{ url_for('benefits_and_support') }}">{{ _('禮遇及支援') }}</a>

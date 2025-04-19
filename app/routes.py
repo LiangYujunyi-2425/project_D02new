@@ -37,7 +37,7 @@ def index():
     prev_url = url_for(
         'index', page=posts.prev_num) if posts.prev_num else None
     mobile_c = Mobile_c.query.filter_by(id=10001).first()
-    health_care = Health_care.query.filter_by(id=1001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
     voice_c = Voice_c.query.filter_by(id=1002).first()
     return render_template('index.html.j2', title=_('Home'), form=form,
                            posts=posts.items, next_url=next_url,
@@ -77,7 +77,10 @@ def login():
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
-    return render_template('login.html.j2', title=_('Sign In'), form=form)
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
+    voice_c = Voice_c.query.filter_by(id=1002).first()
+    return render_template('login.html.j2', title=_('Sign In'), form=form,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)
 
 
 @app.route('/logout')
@@ -227,7 +230,7 @@ def base():
 def benefits_and_support():
         mobile_c = Mobile_c.query.filter_by(id=10001).first()
         health_care = Health_care.query.filter_by(id=10001).first()
-        voice_c = Voice_c.query.filter_by(id=10001).first()
+        voice_c = Voice_c.query.filter_by(id=1002).first()
         return render_template('benefits_and_support.html.j2', title=_('benefits_and_support'),mobile_c = mobile_c,health_care=health_care,voice_c = voice_c)
 
 @app.route('/services', methods=['GET', 'POST'])
@@ -235,5 +238,5 @@ def benefits_and_support():
 def services():
         mobile_c = Mobile_c.query.filter_by(id=10001).first()
         health_care = Health_care.query.filter_by(id=10001).first()
-        voice_c = Voice_c.query.filter_by(id=10001).first()
+        voice_c = Voice_c.query.filter_by(id=1002).first()
         return render_template('services.html.j2', title=_('services'),mobile_c = mobile_c,health_care=health_care,voice_c = voice_c)

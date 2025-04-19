@@ -53,9 +53,9 @@
                             <li>家居寬頻</li>
                             <li>Wi-Fi 6/7</li>
                             <li>智能家居</li>
-                            <li>流動通訊</li>
-                            <li>語音電話</li>
-                            <li>醫療保健</li>
+                            <li>{{ _(' %(username)s', username=mobile_c.body) }}</li>
+                            <li>{{ _(' %(username)s', username=health_care.body) }}</li>
+                            <li>{{ _(' %(username)s', username=voice_c.body) }}</li>
                             <li>保險</li>
                             <li>網絡安全</li>
                             <li>娛樂</li>
@@ -102,3 +102,4 @@
     {{ moment.include_moment() }}
     {{ moment.lang(g.locale) }}
 {% endblock %}
+

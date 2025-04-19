@@ -101,7 +101,10 @@ def register():
         db.session.commit()
         flash(_('Congratulations, you are now a registered user!'))
         return redirect(url_for('login'))
-    return render_template('register.html.j2', title=_('Register'), form=form)
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
+    voice_c = Voice_c.query.filter_by(id=1002).first()
+    return render_template('register.html.j2', title=_('Register'), form=form,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)
 
 
 @app.route('/reset_password_request', methods=['GET', 'POST'])
@@ -133,7 +136,10 @@ def reset_password(token):
         db.session.commit()
         flash(_('Your password has been reset.'))
         return redirect(url_for('login'))
-    return render_template('reset_password.html.j2', form=form)
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
+    voice_c = Voice_c.query.filter_by(id=1002).first()
+    return render_template('reset_password.html.j2', form=form,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)
 
 
 @app.route('/user/<username>')

@@ -45,7 +45,6 @@ def index():
     mobile_c = Mobile_c.query.filter_by(id=10001).first()
     health_care = Health_care.query.filter_by(id=10001).first()
     voice_c = Voice_c.query.filter_by(id=1002).first()
-    bbb = nimabi()
     return render_template('index.html.j2', title=_('Home'), form=form,
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)

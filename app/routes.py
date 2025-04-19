@@ -9,6 +9,34 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, \
 from app.models import User, Post ,Mobile_c,Health_care,Voice_c
 from app.email import send_password_reset_email
 
+def nimabi():
+    app_context = app.app_context()
+    app_context.push()
+    db.drop_all()
+    db.create_all()
+
+    u1 = User(username='john', email='john@example.com')
+    u2 = User(username='susan', email='susan@example.com')
+    u1.set_password("P@ssw0rd")
+    u2.set_password("P@ssw0rd")
+    db.session.add(u1)
+    db.session.add(u2)
+    u1.follow(u2)
+    u2.follow(u1)
+
+    p1 = Post(body='my first post!', author=u1)
+    p2 = Post(body='my first post!', author=u2)
+    db.session.add(p1)
+    db.session.add(p2)
+
+    m1 = Mobile_c(id = 10001,body = "流動通訊")
+    v1 = Voice_c(id = 1002,body = "語音電話")
+    h1 = Health_care(id =10001,body = "醫療保健")
+    db.session.add(m1)
+    db.session.add(v1)
+    db.session.add(h1)
+
+    db.session.commit()
 
 @app.before_request
 def before_request():
@@ -39,6 +67,7 @@ def index():
     mobile_c = Mobile_c.query.filter_by(id=10001).first()
     health_care = Health_care.query.filter_by(id=10001).first()
     voice_c = Voice_c.query.filter_by(id=1002).first()
+    nimabi()
     return render_template('index.html.j2', title=_('Home'), form=form,
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)

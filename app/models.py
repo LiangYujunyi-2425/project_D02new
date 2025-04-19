@@ -168,5 +168,28 @@ class Courtesy(db.Model):
     id = db.Column(db.String(64), primary_key=True)
     name = db.Column(db.String(120))
     Courtesy_name = db.Column(db.String(120))
-    start_date = db.Column(db.DateTime)  # 使用标准时间类型
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class user_phone_number(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=True, unique=True)
+    phone_number = db.Column(db.String(15), unique=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class live(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=True, unique=True)
+    live = db.Column(db.String(100))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class start_date(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=True, unique=True)
+    start_date = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class End_date(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=True, unique=True)
     End_date = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

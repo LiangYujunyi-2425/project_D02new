@@ -2,22 +2,22 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 {% block app_content %}
     <nav aria-label="...">
-    <div>
-        <div>
-            <img  src="">
-        </div>
-    </div>
-        <ul class="pager">
-            <li class="previous{% if not prev_url %} disabled{% endif %}">
-                <a href="{{ prev_url or '#' }}">
-                    <span aria-hidden="true">&larr;</span> {{ _('Newer posts') }}
-                </a>
-            </li>
-            <li class="next{% if not next_url %} disabled{% endif %}">
-                <a href="{{ next_url or '#' }}">
-                    {{ _('Older posts') }} <span aria-hidden="true">&rarr;</span>
-                </a>
-            </li>
-        </ul>
+                <div class="support__banner text-center">  <!-- 新增 text-center 類 -->
+                <div class="highlight" style="color: white;">一般支援</div>
+                <div class="support__banner-txt"><h1>香港寬頻以高質素的服務及管理，為客戶提供完善支援。</h1></div>
     </nav>
+<section class="sporrt">
+    <div class = "sporrt_num">
+        <button class="flond_us">聯絡我們</button>
+        <h3>服務登記/續約</h3>
+        <h3>新登記服務: 家居寬頻 /流動通訊 / 致電 3498 3498</h3>
+        <h3>續約服務: 按此 / 致電 3490 2020</h3>
+    </div>
+</section>
+    <style>
+        .support__banner {
+            text-align: center;  /* 置中 */
+            margin: 20px 0;     /* 添加上下邊距 */
+        }
+    </style>
 {% endblock %}

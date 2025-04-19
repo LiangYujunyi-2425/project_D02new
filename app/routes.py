@@ -199,3 +199,8 @@ def partnership_benefits():
 @login_required
 def benefits_and_support():
         return render_template('benefits_and_support.html.j2', title=_('benefits_and_support'))
+
+@app.route('/services', methods=['GET', 'POST'])
+@login_required
+def services():
+        return render_template('services.html.j2', title=_('services'))

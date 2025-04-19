@@ -6,7 +6,7 @@ from flask_babel import _, get_locale
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, \
     ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User, Post
+from app.models import User, Post ,Mobile_c,Health_care,Voice_c
 from app.email import send_password_reset_email
 
 
@@ -36,9 +36,12 @@ def index():
         'index', page=posts.next_num) if posts.next_num else None
     prev_url = url_for(
         'index', page=posts.prev_num) if posts.prev_num else None
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=1001).first()
+    voice_c = Voice_c.query.all(id=1002).first()
     return render_template('index.html.j2', title=_('Home'), form=form,
                            posts=posts.items, next_url=next_url,
-                           prev_url=prev_url)
+                           prev_url=prev_url,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)
 
 
 @app.route('/explore')
@@ -51,9 +54,12 @@ def explore():
         'explore', page=posts.next_num) if posts.next_num else None
     prev_url = url_for(
         'explore', page=posts.prev_num) if posts.prev_num else None
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
+    voice_c = Voice_c.query.filter_by(id=1002).first()
     return render_template('index.html.j2', title=_('Explore'),
                            posts=posts.items, next_url=next_url,
-                           prev_url=prev_url)
+                           prev_url=prev_url,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -138,8 +144,11 @@ def user(username):
         'index', page=posts.next_num) if posts.next_num else None
     prev_url = url_for(
         'index', page=posts.prev_num) if posts.prev_num else None
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
+    voice_c = Voice_c.query.filter_by(id=1002).first()
     return render_template('user.html.j2', user=user, posts=posts.items,
-                           next_url=next_url, prev_url=prev_url)
+                           next_url=next_url, prev_url=prev_url,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -155,8 +164,11 @@ def edit_profile():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
+    voice_c = Voice_c.query.filter_by(id=1002).first()
     return render_template('edit_profile.html.j2', title=_('Edit Profile'),
-                           form=form)
+                           form=form ,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)
 
 
 @app.route('/follow/<username>')
@@ -172,12 +184,18 @@ def follow(username):
     current_user.follow(user)
     db.session.commit()
     flash(_('You are following %(username)s!', username=username))
-    return redirect(url_for('user', username=username))
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
+    voice_c = Voice_c.query.filter_by(id=1002).first()
+    return redirect(url_for('user', username=username,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c))
 
 
 @app.route('/unfollow/<username>')
 @login_required
 def unfollow(username):
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
+    voice_c = Voice_c.query.filter_by(id=1002).first()
     user = User.query.filter_by(username=username).first()
     if user is None:
         flash(_('User %(username)s not found.', username=username))
@@ -188,19 +206,34 @@ def unfollow(username):
     current_user.unfollow(user)
     db.session.commit()
     flash(_('You are not following %(username)s.', username=username))
-    return redirect(url_for('user', username=username))
+    return redirect(url_for('user', username=username,health_care=health_care,mobile_c = mobile_c,voice_c = voice_c))
 
 @app.route('/partnership_benefits', methods=['GET', 'POST'])
 @login_required
 def partnership_benefits():
-        return render_template('partnership_benefits.html.j2',title=_('partnership_benefits'))
+        mobile_c = Mobile_c.query.filter_by(id=10001).first()
+        health_care = Health_care.query.filter_by(id=10001).first()
+        voice_c = Voice_c.query.filter_by(id=1002).first()
+        return render_template('partnership_benefits.html.j2',title=_('partnership_benefits') , mobile_c = mobile_c,health_care=health_care,voice_c = voice_c )
+
+@app.route('/base', methods=['GET', 'POST'])
+@login_required
+def base():
+        voice_c = Voice_c.query.get(body)
+        return render_template('base.html.j2',title=_('base') , voice_c = voice_c )
 
 @app.route('/禮遇及支援', methods=['GET', 'POST'])
 @login_required
 def benefits_and_support():
-        return render_template('benefits_and_support.html.j2', title=_('benefits_and_support'))
+        mobile_c = Mobile_c.query.filter_by(id=10001).first()
+        health_care = Health_care.query.filter_by(id=10001).first()
+        voice_c = Voice_c.query.filter_by(id=10001).first()
+        return render_template('benefits_and_support.html.j2', title=_('benefits_and_support'),mobile_c = mobile_c,health_care=health_care,voice_c = voice_c)
 
 @app.route('/services', methods=['GET', 'POST'])
 @login_required
 def services():
-        return render_template('services.html.j2', title=_('services'))
+        mobile_c = Mobile_c.query.filter_by(id=10001).first()
+        health_care = Health_care.query.filter_by(id=10001).first()
+        voice_c = Voice_c.query.filter_by(id=10001).first()
+        return render_template('services.html.j2', title=_('services'),mobile_c = mobile_c,health_care=health_care,voice_c = voice_c)

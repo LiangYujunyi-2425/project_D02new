@@ -79,7 +79,7 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
         
-        login_user(user, remember=form.remember_me.data)
+        login_user(user, remember=form.remember_username.data)
         
         # 安全設置 - 只保存用戶名 (非敏感信息)
         response = make_response(redirect(url_for('index')))

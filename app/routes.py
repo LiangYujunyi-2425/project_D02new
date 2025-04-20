@@ -6,7 +6,7 @@ from flask_babel import _, get_locale
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, \
     ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User, Post ,Mobile_c,Health_care,Voice_c
+from app.models import User, Post ,Mobile_c,Health_care,Voice_c,Purchase_plan, user_phone_number, start_date, live, End_date
 from app.email import send_password_reset_email
 
 
@@ -246,3 +246,41 @@ def services():
         health_care = Health_care.query.filter_by(id=10001).first()
         voice_c = Voice_c.query.filter_by(id=1002).first()
         return render_template('services.html.j2', title=_('services'),mobile_c = mobile_c,health_care=health_care,voice_c = voice_c)
+
+@app.route('/buy', methods=['GET', 'POST'])
+@login_required
+def buy():
+        mobile_c = Mobile_c.query.filter_by(id=10001).first()
+        health_care = Health_care.query.filter_by(id=10001).first()
+        voice_c = Voice_c.query.filter_by(id=1002).first()
+        return render_template('buy.html.j2',title=_('buy'),mobile_c = mobile_c,health_care=health_care,voice_c = voice_c)
+
+@app.route('/custommer_buy', methods=['GET', 'POST'])
+def register_customer():
+    if request.method == 'POST':
+        address = request.form.get('address')
+        phone_number = request.form.get('phoneNumber')
+        start_date_value = request.form.get('startDate')
+        purchase_plan = request.form.get('purchasePlan')
+        id = request.form.get('id')  # 从表单中获取用户 ID
+
+        # 儲存用戶電話號碼
+        new_phone = user_phone_number(phone_number=phone_number)
+        db.session.add(new_phone)
+
+        # 儲存開始日期
+        new_start_date = start_date(start_date=start_date_value, user_id=new_phone.id)  # 假設你已經有用戶 ID
+        db.session.add(new_start_date)
+
+        # 儲存購買計劃
+        new_purchase_plan = Purchase_plan(name=address, Purchase_plan=purchase_plan, user_id=new_phone.id)
+        db.session.add(new_purchase_plan)
+
+        new_purchase_plan = Purchase_plan(name=address, Purchase_plan=purchase_plan, user_id=id)
+        db.session.add(new_purchase_plan)
+
+        db.session.commit()
+        flash('註冊成功！', 'success')
+        return redirect(url_for('register_customer'))
+
+    return render_template('buy.html.j2')

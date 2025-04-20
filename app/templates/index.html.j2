@@ -29,7 +29,7 @@
         <div class="tab active" onclick="switchTab(0)">流動通訊</div>
         <div class="tab" onclick="switchTab(1)">家居寬頻</div>
         <div class="tab" onclick="switchTab(2)">OTT 娛樂</div>
-        <div class="tab" onclick="switchTab(3)">全面保障</div>
+        <div class="tab" onclick="switchTab(3)">{{ _(' %(username)s', username=insurance.body) }}</div>
         <div class="tab" onclick="switchTab(4)">外遊數據及保險</div>
         <div class="tab" onclick="switchTab(5)">Shoppy寬樂買</div>
     </div>
@@ -37,7 +37,9 @@
     <div class="content active">流動通訊內容</div>
     <div class="content">家居寬頻內容</div>
     <div class="content">OTT 娛樂內容</div>
-    <div class="content">全面保障內容</div>
+    <div class="content">
+    <img src={{ _(' %(username)s', username=insurance_con.body) }} >
+    </div>
     <div class="content">
     <img src =https://aio-static.hkbn.net/content/queryScenePlanSelectionContents/3x4yPlnD7l48NZu0GYXMRUsgKucAupMsaCohhWquE4.jpg?format=auto&quot>
     </div>

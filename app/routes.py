@@ -6,7 +6,7 @@ from flask_babel import _, get_locale
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, \
     ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User, Post ,Mobile_c,Health_care,Voice_c,Purchase_plan, user_phone_number, start_date, live, End_date
+from app.models import User, Post ,Mobile_c,Health_care,Voice_c,Purchase_plan, user_phone_number, start_date,Insurance,Insurance_con, live, End_date
 from app.email import send_password_reset_email
 
 
@@ -39,9 +39,11 @@ def index():
     mobile_c = Mobile_c.query.filter_by(id=10001).first()
     health_care = Health_care.query.filter_by(id=10001).first()
     voice_c = Voice_c.query.filter_by(id=1002).first()
+    insurance = Insurance.query.filter_by(id=10001).first()
+    insurance_con = Insurance_con.query.get_or_404(insurance.insurance_con_id)
     return render_template('index.html.j2', title=_('Home'), form=form,
                            posts=posts.items, next_url=next_url,
-                           prev_url=prev_url,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)
+                           prev_url=prev_url,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c,insurance=insurance,insurance_con=insurance_con)
 
 
 @app.route('/explore')
@@ -57,9 +59,10 @@ def explore():
     mobile_c = Mobile_c.query.filter_by(id=10001).first()
     health_care = Health_care.query.filter_by(id=10001).first()
     voice_c = Voice_c.query.filter_by(id=1002).first()
+    insurance = Insurance.query.filter_by(id=10001).first()
     return render_template('index.html.j2', title=_('Explore'),
                            posts=posts.items, next_url=next_url,
-                           prev_url=prev_url,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)
+                           prev_url=prev_url,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c,insurance=insurance)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -224,12 +227,6 @@ def partnership_benefits():
         health_care = Health_care.query.filter_by(id=10001).first()
         voice_c = Voice_c.query.filter_by(id=1002).first()
         return render_template('partnership_benefits.html.j2',title=_('partnership_benefits') , mobile_c = mobile_c,health_care=health_care,voice_c = voice_c )
-
-@app.route('/base', methods=['GET', 'POST'])
-@login_required
-def base():
-        voice_c = Voice_c.query.get(body)
-        return render_template('base.html.j2',title=_('base') , voice_c = voice_c )
 
 @app.route('/禮遇及支援', methods=['GET', 'POST'])
 @login_required

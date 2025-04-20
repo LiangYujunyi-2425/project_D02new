@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request, g
+from flask import render_template, flash, redirect, url_for, request, g ,make_response
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from flask_babel import _, get_locale
@@ -69,21 +69,51 @@ def explore():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
+    
     form = LoginForm()
+    
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
+        
         if user is None or not user.check_password(form.password.data):
-            flash(_('Invalid username or password'))
+            flash('Invalid username or password')
             return redirect(url_for('login'))
+        
         login_user(user, remember=form.remember_me.data)
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
-        return redirect(next_page)
+        
+        # 安全設置 - 只保存用戶名 (非敏感信息)
+        response = make_response(redirect(url_for('index')))
+        if form.remember_username.data:  # 表單中添加一個"記住用戶名"選項
+            response.set_cookie(
+                'remembered_username',
+                form.username.data,
+                max_age=60*60*24*30,  # 30天有效期
+                secure=True,
+                httponly=True,
+                samesite='Lax'
+            )
+        else:
+            # 用戶選擇不記住，則刪除可能存在的舊Cookie
+            response.delete_cookie('remembered_username')
+            
+        return response
+    
+    # 從Cookie獲取已記住的用戶名 (如果存在)
+    if 'remembered_username' in request.cookies:
+        form.username.data = request.cookies.get('remembered_username')
+    # 获取需要在登录页面显示的内容
     mobile_c = Mobile_c.query.filter_by(id=10001).first()
     health_care = Health_care.query.filter_by(id=10001).first()
     voice_c = Voice_c.query.filter_by(id=1002).first()
-    return render_template('login.html.j2', title=_('Sign In'), form=form,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)
+    
+    return render_template(
+        'login.html.j2',
+        title=_('Sign In'),
+        form=form,
+        mobile_c=mobile_c,
+        health_care=health_care,
+        voice_c=voice_c
+    )
 
 
 @app.route('/logout')

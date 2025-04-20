@@ -282,32 +282,44 @@ def buy():
         voice_c = Voice_c.query.filter_by(id=1002).first()
         return render_template('buy.html.j2',title=_('buy'),mobile_c = mobile_c,health_care=health_care,voice_c = voice_c)
 
-@app.route('/custommer_buy', methods=['GET', 'POST'])
+@@app.route('/custommer_buy', methods=['GET', 'POST'])
 def register_customer():
     if request.method == 'POST':
         address = request.form.get('address')
         phone_number = request.form.get('phoneNumber')
         start_date_value = request.form.get('startDate')
         purchase_plan = request.form.get('purchasePlan')
-        id = request.form.get('id')  # 从表单中获取用户 ID
+        user_id = request.form.get('id')  # 从表单中获取用户 ID
+
+        # 确认用户 ID 是否有效
+        if user_id is None:
+            flash('用户 ID 无效。', 'danger')
+            return redirect(url_for('register_customer'))
 
         # 儲存用戶電話號碼
-        new_phone = user_phone_number(phone_number=phone_number)
+        new_phone = UserPhoneNumber(phone_number=phone_number)
         db.session.add(new_phone)
 
         # 儲存開始日期
-        new_start_date = start_date(start_date=start_date_value, user_id=new_phone.id)  # 假設你已經有用戶 ID
+        start_date = datetime.strptime(start_date_value, '%Y-%m-%d')
+        new_start_date = start_date(start_date=start_date, user_id=new_phone.id)
         db.session.add(new_start_date)
 
+        # 计算结束日期（开始日期 + 1 年）
+        end_date = start_date.replace(year=start_date.year + 1)
+        new_end_date = End_date(username=address, end_date=end_date)  # 使用地址作为用户名
+        db.session.add(new_end_date)
+
         # 儲存購買計劃
-        new_purchase_plan = Purchase_plan(name=address, Purchase_plan=purchase_plan, user_id=new_phone.id)
+        new_purchase_plan = Purchase_plan(name=address, purchase_plan=purchase_plan, user_id=new_phone.id)
         db.session.add(new_purchase_plan)
 
-        new_purchase_plan = Purchase_plan(name=address, Purchase_plan=purchase_plan, user_id=id)
-        db.session.add(new_purchase_plan)
-
-        db.session.commit()
-        flash('註冊成功！', 'success')
-        return redirect(url_for('register_customer'))
+        try:
+            db.session.commit()
+            flash('註冊成功！', 'success')
+            return redirect(url_for('register_customer'))
+        except Exception as e:
+            db.session.rollback()
+            flash('註冊失敗：{}'.format(str(e)), 'danger')
 
     return render_template('buy.html.j2')

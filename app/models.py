@@ -105,13 +105,13 @@ class Health_care(db.Model):  #table:醫療保健#
 class Insurance_con(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(220))
-    insurance = db.relationship('Insurance')
+    insurance = db.relationship('Insurance', back_populates='insurance_con')
 
 class Insurance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(50))
+    body = db.Column(db.String(220))
     insurance_con_id = db.Column(db.Integer, db.ForeignKey('insurance_con.id'))
-
+    insurance_con = db.relationship('Insurance_con', back_populates='insurance')
 
 
 class protucts(db.Model):#server#

@@ -102,47 +102,17 @@ class Health_care(db.Model):  #table:醫療保健#
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(50))
 
+class Insurance_con(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(220))
+    insurance = db.relationship('Insurance')
 
-class Insurance(db.Model):#保險#
-    id = db.Column(db.String(64), primary_key=True)
-    name = db.Column(db.String(120))
-    
+class Insurance(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(50))
+    insurance_con_id = db.Column(db.Integer, db.ForeignKey('insurance_con.id'))
 
-    def __repr__(self) -> str:
-        return f'<Insurance {self.GInsurance}>'
 
-class network(db.Model):#網絡安全#
-    id = db.Column(db.String(64), primary_key=True)
-    name = db.Column(db.String(120))
-    media = db.Column(db.String(120))
-    
-
-    def __repr__(self) -> str:
-        return f'<network {self.network}>'
-
-class entertainment(db.Model):#娛樂#
-    id = db.Column(db.String(64), primary_key=True)
-    name = db.Column(db.String(120))
-    
-
-    def __repr__(self) -> str:
-        return f'<entertainment {self.entertainment}>'
-#jackwkw#
-class Gaming(db.Model):#電競#
-    id = db.Column(db.String(64), primary_key=True)
-    name = db.Column(db.String(120))
-    price = db.Column(db.String(120))
-
-    def __repr__(self) -> str:
-        return f'<Gaming {self.Gaming}>'
-
-class travel(db.Model):#外遊#
-    id = db.Column(db.String(64), primary_key=True)
-    name = db.Column(db.String(120))
-    price = db.Column(db.String(120))
-
-    def __repr__(self) -> str:
-        return f'<travel {self.travel}>'
 
 class protucts(db.Model):#server#
     id = db.Column(db.String(64), primary_key=True)

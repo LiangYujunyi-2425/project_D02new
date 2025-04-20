@@ -10,7 +10,6 @@ from app.models import User
 class LoginForm(FlaskForm):
     username = StringField(_l('Username'), validators=[DataRequired()])
     password = PasswordField(_l('Password'), validators=[DataRequired()])
-    remember_me = BooleanField(_l('記住我的賬戶號碼/用戶名稱/登入電郵'))
     remember_username = BooleanField(_('記住我的用戶名稱'))
     submit = SubmitField(_l('登入'))
 

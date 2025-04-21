@@ -2,28 +2,34 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 {% block app_content %}
 <section class="contact-form">
-    <h2>登記客戶請輸入</h2>
+    <h2>登记客户请填写</h2>
     <form method="POST" action="{{ url_for('register_customer') }}" onsubmit="return validateForm();">
         <div class="form-group">
-            <label for="address">地址</label>
+            <label for="address">街道地址</label>
             <input type="text" class="form-control" id="address" name="address" required>
-            
-            <label for="phoneNumber">電話號碼</label>
-            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required pattern="^([5|6|8|9][0-9]{7})$" title="請輸入有效的香港電話號碼（例如：91234567）">
-            
-            <label for="startDate">開始日期</label>
+
+            <label for="city">城市</label>
+            <input type="text" class="form-control" id="city" name="city" required>
+
+            <label for="postalCode">邮政编码</label>
+            <input type="text" class="form-control" id="postalCode" name="postalCode" required>
+
+            <label for="phoneNumber">电话号码</label>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required pattern="^([5|6|8|9][0-9]{7})$" title="请输入有效的香港电话号码（例如：91234567）">
+
+            <label for="startDate">开始日期</label>
             <input type="date" class="form-control" id="startDate" name="startDate" required>
-            
-            <label for="purchasePlan">選擇計劃</label>
+
+            <label for="purchasePlan">选择计划</label>
             <select id="purchasePlan" name="purchasePlan" class="form-control" required>
-                <option value="" disabled selected>請選擇計劃</option>
-                <option value="Purchase_plan1">5G 20GB數據 流動通訊計劃 + Samsung Galaxy Fit3 x 2</option>
-                <option value="Purchase_plan2">5G 30GB數據 流動通訊計劃 + Samsung Galaxy Fit3 x 2</option>
-                <option value="Purchase_plan3">5G 50GB數據 流動通訊計劃 + 3GB中國內地數據 + Samsung Galaxy Fit3 x 2</option>
-                <option value="Purchase_plan4">5G 本地數據 30GB</option>
-                <option value="Purchase_plan5">5G本地數據50GB+中國內地及澳門數據3GB+中國流動電話號碼+12個月 JOOX VIP音樂服務計劃</option>
-                <option value="Purchase_plan6">5G本地數據50GB+中國內地及澳門數據3GB+中國流動電話號碼+12個月 Netflix(標準計劃)</option>
-                <option value="Purchase_plan7">5G本地數據50GB+中國內地及澳門數據3GB+中國流動電話號碼+12個月Disney+(標準計劃)</option>
+                <option value="" disabled selected>请选择计划</option>
+                <option value="Purchase_plan1">5G 20GB数据 流动通信计划 + Samsung Galaxy Fit3 x 2</option>
+                <option value="Purchase_plan2">5G 30GB数据 流动通信计划 + Samsung Galaxy Fit3 x 2</option>
+                <option value="Purchase_plan3">5G 50GB数据 流动通信计划 + 3GB中国内地数据 + Samsung Galaxy Fit3 x 2</option>
+                <option value="Purchase_plan4">5G 本地数据 30GB</option>
+                <option value="Purchase_plan5">5G本地数据50GB+中国内地及澳门数据3GB+中国流动电话号码+12个月 JOOX VIP音乐服务计划</option>
+                <option value="Purchase_plan6">5G本地数据50GB+中国内地及澳门数据3GB+中国流动电话号码+12个月 Netflix(标准计划)</option>
+                <option value="Purchase_plan7">5G本地数据50GB+中国内地及澳门数据3GB+中国流动电话号码+12个月Disney+(标准计划)</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">提交</button>
@@ -34,21 +40,21 @@
 function validateForm() {
     const phoneInput = document.getElementById('phoneNumber').value;
     const addressInput = document.getElementById('address').value;
+    const cityInput = document.getElementById('city').value;
+    const postalCodeInput = document.getElementById('postalCode').value;
 
-    // 驗證地址
-    if (!addressInput.trim()) {
-        alert("地址不能為空。");
+    if (!addressInput.trim() || !cityInput.trim() || !postalCodeInput.trim()) {
+        alert("所有地址字段不能为空。");
         return false;
     }
 
-    // 驗證電話號碼格式
-    const phonePattern = /^[5689][0-9]{7}$/; // 修正正則表達式
+    const phonePattern = /^[5689][0-9]{7}$/;
     if (!phonePattern.test(phoneInput)) {
-        alert("請輸入有效的香港電話號碼（例如：91234567）。");
+        alert("请输入有效的香港电话号码（例如：91234567）。");
         return false;
     }
 
-    return true; // 繼續提交表單
+    return true;
 }
 </script>
 {% endblock %}

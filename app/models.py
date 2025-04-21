@@ -134,28 +134,43 @@ class sporrt(db.Model):
     name = db.Column(db.String(120))
     phone_number = db.Column(db.String(15))
 
-class Purchase_plan(db.Model):
-    id = db.Column(db.String(64), primary_key=True)
-    name = db.Column(db.String(120))
-    Purchase_plan = db.Column(db.String(120))
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy()
 
-class user_phone_number(db.Model):
+class UserPhoneNumber(db.Model):
+    __tablename__ = 'user_phone_number'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     phone_number = db.Column(db.String(15), unique=True, nullable=False)
+    addresses = db.relationship('Address', backref='user', lazy=True)  # 关联地址
+    purchase_plans = db.relationship('PurchasePlan', backref='user', lazy=True)
+    start_dates = db.relationship('StartDate', backref='user', lazy=True)
+    end_dates = db.relationship('EndDate', backref='user', lazy=True)
 
-
-class live(db.Model):
+class Address(db.Model):
+    __tablename__ = 'address'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
-    live = db.Column(db.String(100))
+    user_id = db.Column(db.Integer, db.ForeignKey('user_phone_number.id'), nullable=False)
+    street = db.Column(db.String(200), nullable=False)  # 街道地址
+    city = db.Column(db.String(100), nullable=False)    # 城市
+    postal_code = db.Column(db.String(20), nullable=False)  # 邮政编码
+    user = db.relationship('UserPhoneNumber', backref='addresses')
 
-class start_date(db.Model):
+class PurchasePlan(db.Model):
+    __tablename__ = 'purchase_plan'
+    id = db.Column(db.String(64), primary_key=True)
+    name = db.Column(db.String(120))
+    plan_details = db.Column(db.String(120))
+    user_id = db.Column(db.Integer, db.ForeignKey('user_phone_number.id'), nullable=False)
+
+class StartDate(db.Model):
+    __tablename__ = 'start_date'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user_phone_number.id'), nullable=False)
     start_date = db.Column(db.DateTime)
 
-class End_date(db.Model):
+class EndDate(db.Model):
+    __tablename__ = 'end_date'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
-    End_date = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user_phone_number.id'), nullable=False)
+    end_date = db.Column(db.DateTime)

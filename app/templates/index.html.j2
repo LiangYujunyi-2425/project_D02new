@@ -59,6 +59,14 @@
         }
     </script>
    </div>
+   <h1>{{ _(' %(username)s', username=current_user.username) }}</h1>
+    {% if form %}
+        {{ wtf.quick_form(form) }}
+        <br/>
+    {% endif %}
+    {% for post in posts %}
+        {% include "_post.html.j2" %}
+    {% endfor %}
 
 
     <nav aria-label="...">

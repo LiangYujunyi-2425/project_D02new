@@ -22,6 +22,7 @@ db.session.add(p1)
 db.session.add(p2)
 
 ic1 = Insurance_con (id = 1001,body = "https://aio-static.hkbn.net/content/queryScenePlanSelectionContents/FDmUCGuXb3z0szyydYOWDW7BWlWZwE4Rxxkzyatvno.jpg?format=auto")
+ic2 = Insurance_con (id = 1002,body = "OTT 娛樂內容")
 i1 = Insurance(id =10001,body = "全面保障",insurance_con_id = 1001)
 m1 = Mobile_c(id = 10001,body = "流動通訊")
 v1 = Voice_c(id = 1002,body = "語音電話")

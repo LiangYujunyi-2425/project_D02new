@@ -60,9 +60,10 @@ def explore():
     health_care = Health_care.query.filter_by(id=10001).first()
     voice_c = Voice_c.query.filter_by(id=1002).first()
     insurance = Insurance.query.filter_by(id=10001).first()
+    insurance_con = Insurance_con.query.get_or_404(insurance.insurance_con_id)
     return render_template('index.html.j2', title=_('Explore'),
                            posts=posts.items, next_url=next_url,
-                           prev_url=prev_url,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c,insurance=insurance)
+                           prev_url=prev_url,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c,insurance=insurance,insurance_con=insurance_con)
 
 
 @app.route('/login', methods=['GET', 'POST'])

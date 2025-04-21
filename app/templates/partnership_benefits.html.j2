@@ -10,7 +10,7 @@
             <img  src="https://aio-static.hkbn.net/content/querySceneNewMoveInOfferContents/qJz099CQcsB175wwD9RoQcDbjkTEEaqY1xLxXu3dxg.png?format=auto">
         </div>
         <div style="width:2000px">
-            <h5><a href="https://turbo-waffle-97j75w97pvp5hvgj-5000.app.github.dev/buy">立即登記 體驗真正極速光纖上網</a></h5>
+            <h5><a href="{{ url_for('buy') }}">立即登記 體驗真正極速光纖上網</a></h5>
             <h1>新入伙家居光纖寬頻</h1>
             <h5>輸入地址查詢家居寬頻網絡覆蓋及月費計劃</h5>
             <form>
@@ -18,7 +18,7 @@
                 <label for="name">{{ _(' %(username)s先生，請輸入完整的地址哦！', username=current_user.username) }}</label>
                 <input type="text" class="form-control" id="name" required>
             </div>
-            <button type="submit" class="btn btn-primary">提交</button>
+            <button ><a href="{{ url_for('buy') }}">提交</a></button>
             </form>
         </div>
     </div>

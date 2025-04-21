@@ -282,7 +282,7 @@ def buy():
         voice_c = Voice_c.query.filter_by(id=1002).first()
         return render_template('buy.html.j2',title=_('buy'),mobile_c = mobile_c,health_care=health_care,voice_c = voice_c)
 
-@@app.route('/custommer_buy', methods=['GET', 'POST'])
+@app.route('/custommer_buy', methods=['GET', 'POST'])
 def register_customer():
     if request.method == 'POST':
         address = request.form.get('address')
@@ -297,7 +297,7 @@ def register_customer():
             return redirect(url_for('register_customer'))
 
         # 儲存用戶電話號碼
-        new_phone = UserPhoneNumber(phone_number=phone_number)
+        new_phone = phone_number(phone_number=phone_number)
         db.session.add(new_phone)
 
         # 儲存開始日期

@@ -143,6 +143,7 @@ class user_phone_number(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     phone_number = db.Column(db.String(15), unique=True, nullable=False)
+    
 
 
 class live(db.Model):

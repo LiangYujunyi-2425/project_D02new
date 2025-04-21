@@ -152,8 +152,11 @@ def reset_password_request():
         flash(
             _('Check your email for the instructions to reset your password'))
         return redirect(url_for('login'))
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
+    voice_c = Voice_c.query.filter_by(id=1002).first()
     return render_template('reset_password_request.html.j2',
-                           title=_('Reset Password'), form=form)
+                           title=_('Reset Password'), form=form,mobile_c=mobile_c,health_care=health_care,voice_c = voice_c)
 
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])

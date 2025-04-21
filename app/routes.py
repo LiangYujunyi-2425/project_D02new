@@ -287,20 +287,12 @@ def buy():
         voice_c = Voice_c.query.filter_by(id=1002).first()
         return render_template('buy.html.j2',title=_('buy'),mobile_c = mobile_c,health_care=health_care,voice_c = voice_c)
 
-@app.route('/kickitback_two', methods=['POST'])
-def kickitback_two():
-    try:
-        with db.session.begin():
-            # 在这里执行实际的数据库操作
-            # 例如：db.session.add(new_user)
-            pass  # 替换为实际逻辑
-    except Exception as e:
-        db.session.rollback()  # 回滚事务
-        return str(e), 500  # 返回错误信息
-    return '注册成功', 200
-
 @app.route('/customer_buy', methods=['GET', 'POST'])
 def register_customer():
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
+    voice_c = Voice_c.query.filter_by(id=1002).first()
+
     if request.method == 'POST':
         address_street = request.form.get('address')
         city = request.form.get('city')
@@ -308,19 +300,17 @@ def register_customer():
         phone_number = request.form.get('phoneNumber')
         start_date_value = request.form.get('startDate')
         purchase_plan_id = request.form.get('purchasePlan')
-        mobile_c = Mobile_c.query.filter_by(id=10001).first()
-        health_care = Health_care.query.filter_by(id=10001).first()
-        voice_c = Voice_c.query.filter_by(id=1002).first()
 
         if not address_street or not city or not postal_code or not phone_number or not start_date_value or not purchase_plan_id:
             flash('所有字段都是必填项。', 'danger')
             return redirect(url_for('register_customer'))
 
         try:
+            # 使用上下文管理器自动管理事务
             with db.session.begin():
                 new_phone = UserPhoneNumber(username=address_street, phone_number=phone_number)
                 db.session.add(new_phone)
-                db.session.flush()  # 获取新电话号码记录的 ID
+                db.session.flush()  # 确保获取新电话号码的 ID
 
                 # 添加地址
                 new_address = Address(user_id=new_phone.id, street=address_street, city=city, postal_code=postal_code)
@@ -343,7 +333,7 @@ def register_customer():
             flash('注册成功！', 'success')
             return redirect(url_for('register_customer'))
         except Exception as e:
-            db.session.rollback()
+            db.session.rollback()  # 在发生异常时回滚
             flash('注册失败：{}'.format(str(e)), 'danger')
 
-    return render_template('buy.html.j2',title=_('buy_app'),mobile_c = mobile_c,health_care=health_care,voice_c = voice_c)
+    return render_template('buy.html.j2', title=_('buy_app'), mobile_c=mobile_c, health_care=health_care, voice_c=voice_c)

@@ -1,12 +1,12 @@
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request, g ,make_response
+from flask import Flask, render_template, flash, redirect, url_for, request, g ,make_response
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from flask_babel import _, get_locale
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, \
     ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User, Post ,Mobile_c,Health_care,Voice_c,Purchase_plan, user_phone_number, start_date,Insurance,Insurance_con, live, End_date
+from app.models import User, Post ,Mobile_c,Health_care,Voice_c,Insurance,Insurance_con, UserPhoneNumber,Address,PurchasePlan,StartDate,EndDate
 from app.email import send_password_reset_email
 
 
@@ -287,32 +287,53 @@ def buy():
         voice_c = Voice_c.query.filter_by(id=1002).first()
         return render_template('buy.html.j2',title=_('buy'),mobile_c = mobile_c,health_care=health_care,voice_c = voice_c)
 
-@app.route('/custommer_buy', methods=['GET', 'POST'])
+@app.route('/customer_buy', methods=['GET', 'POST'])
 def register_customer():
+    mobile_c = Mobile_c.query.filter_by(id=10001).first()
+    health_care = Health_care.query.filter_by(id=10001).first()
+    voice_c = Voice_c.query.filter_by(id=1002).first()
+
     if request.method == 'POST':
-        address = request.form.get('address')
+        address_street = request.form.get('address')
+        city = request.form.get('city')
+        postal_code = request.form.get('postalCode')
         phone_number = request.form.get('phoneNumber')
         start_date_value = request.form.get('startDate')
-        purchase_plan = request.form.get('purchasePlan')
-        id = request.form.get('id')  # 从表单中获取用户 ID
+        purchase_plan_id = request.form.get('purchasePlan')
 
-        # 儲存用戶電話號碼
-        new_phone = user_phone_number(phone_number=phone_number)
-        db.session.add(new_phone)
+        if not address_street or not city or not postal_code or not phone_number or not start_date_value or not purchase_plan_id:
+            flash('所有字段都是必填项。', 'danger')
+            return redirect(url_for('register_customer'))
 
-        # 儲存開始日期
-        new_start_date = start_date(start_date=start_date_value, user_id=new_phone.id)  # 假設你已經有用戶 ID
-        db.session.add(new_start_date)
+        try:
+            # 使用上下文管理器自动管理事务
+            with db.session.begin():
+                new_phone = UserPhoneNumber(username=address_street, phone_number=phone_number)
+                db.session.add(new_phone)
+                db.session.flush()  # 确保获取新电话号码的 ID
 
-        # 儲存購買計劃
-        new_purchase_plan = Purchase_plan(name=address, Purchase_plan=purchase_plan, user_id=new_phone.id)
-        db.session.add(new_purchase_plan)
+                # 添加地址
+                new_address = Address(user_id=new_phone.id, street=address_street, city=city, postal_code=postal_code)
+                db.session.add(new_address)
 
-        new_purchase_plan = Purchase_plan(name=address, Purchase_plan=purchase_plan, user_id=id)
-        db.session.add(new_purchase_plan)
+                # 保存开始日期
+                start_date = datetime.strptime(start_date_value, '%Y-%m-%d')
+                new_start_date = StartDate(start_date=start_date, user_id=new_phone.id)
+                db.session.add(new_start_date)
 
-        db.session.commit()
-        flash('註冊成功！', 'success')
-        return redirect(url_for('register_customer'))
+                # 计算并保存结束日期
+                end_date = start_date.replace(year=start_date.year + 1)
+                new_end_date = EndDate(user_id=new_phone.id, end_date=end_date)
+                db.session.add(new_end_date)
 
-    return render_template('buy.html.j2')
+                # 保存购买计划
+                new_purchase_plan = PurchasePlan(id=purchase_plan_id, name=address_street, plan_details=purchase_plan_id, user_id=new_phone.id)
+                db.session.add(new_purchase_plan)
+
+            flash('注册成功！', 'success')
+            return redirect(url_for('register_customer'))
+        except Exception as e:
+            db.session.rollback()  # 在发生异常时回滚
+            flash('注册失败：{}'.format(str(e)), 'danger')
+
+    return render_template('buy.html.j2', title=_('buy_app'), mobile_c=mobile_c, health_care=health_care, voice_c=voice_c)

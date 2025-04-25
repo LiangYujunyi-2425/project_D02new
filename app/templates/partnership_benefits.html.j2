@@ -16,7 +16,7 @@
             <form>
             <div class="form-group">
                 <label for="name">{{ _(' %(username)s先生，請輸入完整的地址哦！', username=current_user.username) }}</label>
-                <input type="text" class="form-control" id="name" required>
+                <input style="width:1400px ; height:35px" type="text" class="form-control" id="name" required>
             </div>
             <button ><a href="{{ url_for('buy') }}">提交</a></button>
             </form>

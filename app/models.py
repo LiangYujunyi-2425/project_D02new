@@ -134,15 +134,13 @@ class sporrt(db.Model):
     name = db.Column(db.String(120))
     phone_number = db.Column(db.String(15))
 
-from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy()
 
 class UserPhoneNumber(db.Model):
     __tablename__ = 'user_phone_number'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     phone_number = db.Column(db.String(15), unique=True, nullable=False)
-    addresses = db.relationship('Address', backref='user', lazy=True)  # 关联地址
+    addresses = db.relationship('Address', backref='owner', lazy=True)  # Changed backref to 'owner'
     purchase_plans = db.relationship('PurchasePlan', backref='user', lazy=True)
     start_dates = db.relationship('StartDate', backref='user', lazy=True)
     end_dates = db.relationship('EndDate', backref='user', lazy=True)
@@ -151,10 +149,10 @@ class Address(db.Model):
     __tablename__ = 'address'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user_phone_number.id'), nullable=False)
-    street = db.Column(db.String(200), nullable=False)  # 街道地址
-    city = db.Column(db.String(100), nullable=False)    # 城市
-    postal_code = db.Column(db.String(20), nullable=False)  # 邮政编码
-    user = db.relationship('UserPhoneNumber', backref='addresses')
+    street = db.Column(db.String(200), nullable=False)  # Street address
+    city = db.Column(db.String(100), nullable=False)    # City
+    postal_code = db.Column(db.String(20), nullable=False)  # Postal code
+    # Remove backref declaration here as it's already defined in UserPhoneNumber
 
 class PurchasePlan(db.Model):
     __tablename__ = 'purchase_plan'

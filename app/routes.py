@@ -292,7 +292,7 @@ def register_customer():
     mobile_c = Mobile_c.query.filter_by(id=10001).first()
     health_care = Health_care.query.filter_by(id=10001).first()
     voice_c = Voice_c.query.filter_by(id=1002).first()
-
+    
     if request.method == 'POST':
         address_street = request.form.get('address')
         city = request.form.get('city')
@@ -301,39 +301,36 @@ def register_customer():
         start_date_value = request.form.get('startDate')
         purchase_plan_id = request.form.get('purchasePlan')
 
-        if not address_street or not city or not postal_code or not phone_number or not start_date_value or not purchase_plan_id:
+        if not all([address_street, city, postal_code, phone_number, start_date_value, purchase_plan_id]):
             flash('所有字段都是必填项。', 'danger')
             return redirect(url_for('register_customer'))
 
         try:
-            # 使用上下文管理器自动管理事务
-            with db.session.begin():
-                new_phone = UserPhoneNumber(username=address_street, phone_number=phone_number)
-                db.session.add(new_phone)
-                db.session.flush()  # 确保获取新电话号码的 ID
+            # 不要手动开始事务，直接添加条目
+            new_phone = UserPhoneNumber(username=address_street, phone_number=phone_number)
+            db.session.add(new_phone)
+            db.session.flush()  # 确保获取新电话号码的 ID
 
-                # 添加地址
-                new_address = Address(user_id=new_phone.id, street=address_street, city=city, postal_code=postal_code)
-                db.session.add(new_address)
+            new_address = Address(user_id=new_phone.id, street=address_street, city=city, postal_code=postal_code)
+            db.session.add(new_address)
 
-                # 保存开始日期
-                start_date = datetime.strptime(start_date_value, '%Y-%m-%d')
-                new_start_date = StartDate(start_date=start_date, user_id=new_phone.id)
-                db.session.add(new_start_date)
+            start_date = datetime.strptime(start_date_value, '%Y-%m-%d')
+            new_start_date = StartDate(start_date=start_date, user_id=new_phone.id)
+            db.session.add(new_start_date)
 
-                # 计算并保存结束日期
-                end_date = start_date.replace(year=start_date.year + 1)
-                new_end_date = EndDate(user_id=new_phone.id, end_date=end_date)
-                db.session.add(new_end_date)
+            end_date = start_date.replace(year=start_date.year + 1)
+            new_end_date = EndDate(user_id=new_phone.id, end_date=end_date)
+            db.session.add(new_end_date)
 
-                # 保存购买计划
-                new_purchase_plan = PurchasePlan(id=purchase_plan_id, name=address_street, plan_details=purchase_plan_id, user_id=new_phone.id)
-                db.session.add(new_purchase_plan)
+            new_purchase_plan = PurchasePlan(id=purchase_plan_id, name=address_street, plan_details=purchase_plan_id, user_id=new_phone.id)
+            db.session.add(new_purchase_plan)
 
+            db.session.commit()  # 提交事务
             flash('注册成功！', 'success')
             return redirect(url_for('register_customer'))
+
         except Exception as e:
-            db.session.rollback()  # 在发生异常时回滚
+            db.session.rollback()  # 回滚事务
             flash('注册失败：{}'.format(str(e)), 'danger')
 
     return render_template('buy.html.j2', title=_('buy_app'), mobile_c=mobile_c, health_care=health_care, voice_c=voice_c)

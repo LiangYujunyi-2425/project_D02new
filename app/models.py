@@ -122,18 +122,6 @@ class protucts(db.Model):#server#
 
     def __repr__(self) -> str:
         return f'<protucts {self.protucts}>'
-    
-class login2(db.Model):
-    id = db.Column(db.String(64), primary_key=True)
-    name = db.Column(db.String(120))
-    username = db.Column(db.String(64), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
-
-class sporrt(db.Model):
-    id = db.Column(db.String(64), primary_key=True)
-    name = db.Column(db.String(120))
-    phone_number = db.Column(db.String(15))
-
 
 class UserPhoneNumber(db.Model):
     __tablename__ = 'user_phone_number'
